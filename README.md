@@ -17,24 +17,28 @@ market-trend-forecast/
 ├── data/
 │   ├── raw/             # Original YFinance downloads
 │   └── processed/       # Cleaned, merged datasets with features
+│ 
+├── model/
+│ 
 ├── notebooks/
 │   ├── 1_EDA.ipynb     # Exploratory Data Analysis
-│   ├── 2_Develop_forcasting_models.ipynb # LSTM Model Training
-│   ├── 3_Future_market_trends.ipynb # 12-Month Forecast
-│   ├── 4_Portfolio_optimization.ipynb # MPT Optimization
-│   └── 5_Strategy_backtesting.ipynb # Strategy Simulation
-|
-├── data_fetching.py    # Historical price data fetch
-├── data_cleaning.py    # Preprocessing & feature engineering
-│           
+│   ├── 2_Develop_forcasting_models.ipynb  # LSTM Model Training
+│   ├── 3_Future_market_trends.ipynb       # 12-Month Forecast
+│   ├── 4_Portfolio_optimization.ipynb     # MPT Optimization
+│   └── 5_Strategy_backtesting.ipynb       # Strategy Simulation
+│ 
+├── outputs/                # Charts, forecasts, and CSVs
+│   ├── EDA/ 
+│   ├── Forcasting models/
+│   ├── Future market trends/
+│   ├── Portfolio optimization/
+│   └── Strategy backtesting/
+│ 
+├── data_fetching.py        # Historical price data fetch
+├── data_cleaning.py        # Preprocessing & featureengineering         
 ├── requirements.txt        # Python dependencies
 ├── README.md               # Project documentation
-└── outputs/                # Charts, forecasts, and CSVs
-    ├── EDA/ 
-    ├── Forcasting models/
-    ├── Future market trends/
-    ├── Portfolio optimization/
-    └── Strategy backtesting/
+└── 
 
 ```
 
@@ -111,7 +115,7 @@ market-trend-forecast/
 ## Installation & Usage
 
 ```bash
-git clone <repo_url>
+git clone https://github.com/yitbarek16/market-trend-forecast
 cd market-trend-forecast
 pip install -r requirements.txt
 ```
