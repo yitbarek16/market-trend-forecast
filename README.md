@@ -27,7 +27,7 @@ market-trend-forecast/
 │   ├── 4_Portfolio_optimization.ipynb     # MPT Optimization
 │   └── 5_Strategy_backtesting.ipynb       # Strategy Simulation
 │ 
-├── outputs/                # Charts, forecasts, and CSVs
+├── outputs/                # Charts, and CSVs
 │   ├── EDA/ 
 │   ├── Forcasting models/
 │   ├── Future market trends/
@@ -37,9 +37,7 @@ market-trend-forecast/
 ├── data_fetching.py        # Historical price data fetch
 ├── data_cleaning.py        # Preprocessing & featureengineering         
 ├── requirements.txt        # Python dependencies
-├── README.md               # Project documentation
-└── 
-
+└── README.md               # Project documentation
 ```
 
 ---
