@@ -1,9 +1,14 @@
-pandas
 numpy
+pandas
 matplotlib
 seaborn
 scikit-learn
+joblib
+tensorflow
+keras
 statsmodels
 yfinance
-jupyter
+scipy
 arch
+pmdarima
+pypfopt

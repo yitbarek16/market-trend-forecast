@@ -1,9 +1,12 @@
-# Time Series Forecasting for Portfolio Optimization
-##  Project Overview
-**Guide Me in Finance (GMF) Investments** leverages advanced time series forecasting to optimize client portfolios containing:
-- **TSLA**: High-growth tech stock
-- **SPY**: S&P 500 market benchmark
-- **BND**: Stable bond ETF
+# Market Trend Forecast: Time Series Forecasting & Portfolio Optimization
+
+## Overview
+**Guide Me in Finance (GMF) Investments** utilizes advanced time series modeling and modern portfolio theory to optimize investment strategies. This project analyzes and forecasts three key assets:
+- **TSLA**: High-growth technology stock
+- **SPY**: S&P 500 ETF (U.S. equity benchmark)
+- **BND**: Vanguard Total Bond Market ETF (low-volatility, income asset)
+
+The workflow covers **data acquisition, exploratory analysis, time series modeling, forecasting, portfolio optimization, and backtesting**.
 
 ---
 
@@ -12,23 +15,39 @@
 ```
 market-trend-forecast/
 ├── data/
-│   ├── raw/           # Original YFinance exports
-│   └── processed/     # Cleaned and merged data
-│   
-│
+│   ├── raw/             # Original YFinance downloads
+│   └── processed/       # Cleaned, merged datasets with features
 ├── notebooks/
-│   └── 1_EDA_Visualizations.ipynb   # Exploratory Data Analysis notebook
-│
-├── data_cleaning.py     # Script for cleaning raw data
-├── data_fetching.py     # Script for fetching data from YFinance
-├── README.md            # Project overview and instructions
-└── requirements.txt     # Python dependencies
+│   ├── 1_EDA.ipynb     # Exploratory Data Analysis
+│   ├── 2_Develop_forcasting_models.ipynb # LSTM Model Training
+│   ├── 3_Future_market_trends.ipynb # 12-Month Forecast
+│   ├── 4_Portfolio_optimization.ipynb # MPT Optimization
+│   └── 5_Strategy_backtesting.ipynb # Strategy Simulation
+|
+├── data_fetching.py    # Historical price data fetch
+├── data_cleaning.py    # Preprocessing & feature engineering
+│           
+├── requirements.txt        # Python dependencies
+├── README.md               # Project documentation
+└── outputs/                # Charts, forecasts, and CSVs
+    ├── EDA/ 
+    ├── Forcasting models/
+    ├── Future market trends/
+    ├── Portfolio optimization/
+    └── Strategy backtesting/
 
 ```
 
-###  Key Insights (2015–2025)
+---
 
-#### 1. Asset Performance
+## Methodology & Key Results
+
+### 1. Data Acquisition & EDA
+- Downloaded daily OHLCV data for TSLA, SPY, BND via `yfinance`
+- Engineered features: daily/log returns, rolling mean/std, annualized volatility
+- Statistical and correlation analysis
+
+**Summary (2015–2025):**
 
 | Metric         | TSLA    | SPY    | BND   |
 |----------------|---------|--------|-------|
@@ -37,81 +56,91 @@ market-trend-forecast/
 | Sharpe Ratio   | 0.49    | 0.73   | 0.32  |
 | Max Drawdown   | -138.5% | -38.6% | -21.0% |
 
+---
 
-#### 2. Critical Relationships
-
-**Correlation Matrix:**
-
-|        | TSLA | SPY | BND |
-|--------|------|-----|-----|
-| TSLA   | 1.00 | 0.53| 0.07|
-| SPY    | 0.53 | 1.00| 0.10|
-| BND    | 0.07 | 0.10| 1.00|
-
-#### 3. Volatility Characteristics
-
-
-- **TSLA:** Extreme volatility (>150% during crises)
-- **SPY:** Typical market range (15–40%)
-- **BND:** Stable (<10% volatility)
+### 2. LSTM Model Training
+- Built and trained LSTM model for TSLA price prediction
+- Used sliding-window sequences and `MinMaxScaler`
+- Saved model weights and scalers for reproducibility
 
 ---
 
-## 🛠️ Implementation
-
-### Data Processing
-
-```python
-def preprocess_data():
-    # Merge three assets
-    # Add volatility features
-    # Handle missing values
-    return pd.read_csv('processed_data.csv')
-```
-
-### Modeling Approach
-
-```mermaid
-graph TD
-    A[Log Returns] --> B{Stationary?}
-    B -->|Yes| C[ARIMA/SARIMA]
-    B -->|No| D[Differencing]
-    C --> E[Volatility Forecasting]
-    E --> F[Portfolio Optimization]
-```
+### 3. 12-Month Price Forecast
+- Generated 252 trading-day forecast for TSLA
+- Computed 95% confidence intervals from residuals
+- Visualized historical vs. forecast prices
 
 ---
 
-## Getting Started
+### 4. Portfolio Optimization (Modern Portfolio Theory)
+- TSLA expected return: LSTM forecast
+- SPY & BND: historical annualized returns
+- Covariance matrix from daily returns
+- Efficient Frontier plotted; Max Sharpe and Min Volatility portfolios identified
+- TSLA allocation capped at 10% for risk management
 
-**Install requirements:**
+**Recommended Portfolio (Max Sharpe, TSLA ≤ 10%)**
+
+| Asset | Allocation |
+|-------|------------|
+| TSLA  | 10%        |
+| SPY   | 60%        |
+| BND   | 30%        |
+
+- **Expected Annual Return:** 10.36%
+- **Annual Volatility:** 15.06%
+- **Sharpe Ratio:** 0.69
+
+---
+
+### 5. Strategy Backtesting
+- Backtested Aug 2024 – Jul 2025
+- Compared:
+  - **Hold Strategy:** Fixed weights
+  - **Monthly Rebalance:** Monthly portfolio adjustment
+  - **Benchmark:** 60% SPY / 40% BND
+
+| Strategy              | Return   | Volatility | Sharpe |
+|-----------------------|----------|------------|--------|
+| Hold                  | 18.25%   | 18.35%     | 0.99   |
+| Monthly Rebalance     | 17.72%   | 18.35%     | 0.97   |
+| Benchmark             | 12.49%   | 13.11%     | 0.95   |
+
+---
+
+## Installation & Usage
+
 ```bash
+git clone <repo_url>
+cd market-trend-forecast
 pip install -r requirements.txt
 ```
 
-**Run pipeline:**
+**Run Data Pipeline:**
 ```bash
-python src/data_pipeline.py
+python src/data_fetching.py
+python src/data_cleaning.py
 ```
 
-**Explore notebooks:**
-```bash
-jupyter notebook notebooks/
-```
+**Modeling & Analysis:**
+- Open and run notebooks in `notebooks/` for modeling, forecasting, optimization, and backtesting.
+- Results and charts are saved in `outputs/`.
 
 ---
 
-## Sample Outputs
+## Key Learnings
 
-| File              | Description                       |
-|-------------------|-----------------------------------|
-| 1_EDA.ipynb       | Complete exploratory analysis     |
-| 2_Modeling.ipynb  | ARIMA/LSTM implementations        |
+- Integrating machine learning (LSTM) with finance theory (MPT) enables robust, data-driven portfolio strategies.
+- Limiting high-volatility assets (TSLA) improves risk-adjusted returns.
+- Regular rebalancing can reduce risk with minimal impact on returns.
+- Backtesting validates forecast-driven strategies and highlights uncertainty.
 
 ---
 
-## Key Findings
+## Outputs & Visualizations
 
-- TSLA requires GARCH modeling for volatility clusters.
-- BND provides best diversification (correlation 0.07 with TSLA).
-- Optimal portfolio mix reduces volatility by 40% vs TSLA alone
+*(See `outputs/` for charts and CSV results)*
+
+---
+
+**For questions or contributions, please open an issue or submit a pull request.**
